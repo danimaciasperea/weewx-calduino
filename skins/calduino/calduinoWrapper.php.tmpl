@@ -1,0 +1,546 @@
+#raw
+<?php
+		
+	$generalMonitorPath="/var/www/html/calduino/generalMonitor.xml";	
+	$generalMonitorLength=107;
+	
+	$programPath="/var/www/html/calduino/program.xml";
+	$programLength1=59;
+	$programLength2=44;
+	
+	$rcDatetimePath="/var/www/html/calduino/rcDatetime.xml";
+	$rcDatetimeLength=8;
+	
+	$standardLength=3;
+	
+	$lockResource = "/var/www/html/calduino/httpRequest.lock";
+	
+	$updateXML = TRUE;
+	$maxRetries = 5;
+	$currentRetry = 0;
+
+	/**
+     * Get resource lock to ensure serial access to calduino
+     */
+	function getLock()
+	{		
+		global $lockResource;
+		$maxLockWaitTime = 60;
+		$exitTime = time() + $maxLockWaitTime;
+		
+		while (!mkdir($lockResource))
+		{
+			sleep(1);
+			if (time() > $exitTime)
+			{
+				rmdir($lockResource);
+			}			
+		}
+	}
+	
+	/**
+     * Release lock to calduino
+     */
+	function releaseLock()
+	{
+		global $lockResource;
+		rmdir($lockResource);
+	}	 
+	 
+	/* if started from commandline, wrap parameters to  $_POST */
+	if (!isset($_SERVER["HTTP_HOST"]))
+	{
+	  parse_str($argv[1], $_POST);
+	}	
+	
+	if (isset($_POST["parameter"]))
+	{
+		$parameter = $_POST["parameter"];
+	}
+	else
+	{
+		$parameter = null;
+	}
+
+	if (isset($_POST["value"]))
+	{
+		$value = $_POST["value"];
+	}
+	else
+	{
+		$value = null;
+	}	
+	
+	// create a curl object to communicate with calduino
+	$ch = curl_init();
+	curl_setopt($ch,CURLOPT_TIMEOUT,30);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);	
+	$url = "http://calduino";	
+	
+	// get lock supressing warning messages
+	@getLock();	
+			
+	// run the corresponding operation 
+		switch ($parameter)
+		{				
+			case "getGeneralMonitor":
+			{
+				// get general monitor xml
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=29");				
+				do
+				{
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $generalMonitorLength)
+					{
+						// save the string returned in a XML file, updating the RTC tag
+						$xml=simplexml_load_string($output);					
+						if (isset($xml->Calduino->RTC))
+						{
+							$xml->Calduino->RTC = time();
+							$xml->asXML($generalMonitorPath);
+							break;
+						}
+					}
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));	
+												
+				curl_close($ch);
+				$updateXML = FALSE;
+				
+				break;
+			}				
+			
+			case "getProgram":
+			{
+				// get program xml
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=" . (str_pad($value, 2, '0', STR_PAD_LEFT)));				
+				do
+				{
+					$output = curl_exec($ch);
+					if ((substr_count($output, PHP_EOL) == $programLength1) || (substr_count($output, PHP_EOL) == $programLength2))
+					{
+						// save the string returned in a XML file
+						$xml=simplexml_load_string($output);	
+						$xml->asXML($programPath);
+						break;
+					}
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));	
+												
+				curl_close($ch);
+				$updateXML = FALSE;
+				
+				break;
+			}
+			
+			case "checkRCDatetime":
+			{
+				// get rc datetime xml
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=00");				
+				do
+				{
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $rcDatetimeLength)
+					{
+						$xml=simplexml_load_string($output);
+						if (isset($xml->Minute) && isset($xml->Hour))
+						{							
+							echo abs(($xml->Minute + $xml->Hour * 60)-(date('i') + date('H') * 60));
+							break;
+						}
+					}
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));	
+						
+				curl_close($ch);
+				$updateXML = FALSE;	
+				
+				break;
+			}
+							
+			case "WorkingModeHC1-SelDayTempHC":
+			case "WorkingModeHC2-SelDayTempHC":
+			{
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=31&hc=" . (strpos($parameter, "HC1")?1:2) . "&wm=1&tp=" . ($value * 2));				
+				do
+				{
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength)
+					{
+						$xml=simplexml_load_string($output);
+						if ((isset($xml->SelDayTempHC)) && ($xml->SelDayTempHC == ($value * 2))) break;
+					}					
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));		
+				
+				curl_close($ch);				
+				break;				
+			}
+
+			case "WorkingModeHC1-SelNightTempHC":
+			case "WorkingModeHC2-SelNightTempHC":
+			{
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=31&hc=" . (strpos($parameter, "HC1")?1:2) ."&wm=0&tp=" . ($value * 2));				
+				do
+				{
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength)
+					{
+						$xml=simplexml_load_string($output);
+						if ((isset($xml->SelNightTempHC)) && ($xml->SelNightTempHC == ($value * 2))) break;
+					}					
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));		
+				
+				curl_close($ch);				
+				break;				
+			}
+
+			case "WorkingModeHC1-WorkModeHC":
+			case "WorkingModeHC2-WorkModeHC":
+			{
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=30&hc=" . (strpos($parameter, "HC1")?1:2) . "&wm=" . ($value));				
+				do
+				{
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength)
+					{
+						$xml=simplexml_load_string($output);
+						if ((isset($xml->WorkModeHC)) && ($xml->WorkModeHC == $value)) break;
+					}					
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));		
+				
+				curl_close($ch);				
+				break;				
+			}		
+
+			case "WorkingModeHC1-RoomTempOffHC":
+			case "WorkingModeHC2-RoomTempOffHC":
+			{
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=36&hc=" . (strpos($parameter, "HC1")?1:2) . "&tp=" .   (($value<0)?('-'):'') . (str_pad(abs($value * 2), 2, '0', STR_PAD_LEFT)));				
+				do
+				{
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength)
+					{
+						$xml=simplexml_load_string($output);
+						if ((isset($xml->RoomTempOffHC)) && ($xml->RoomTempOffHC == ($value * 2))) break;
+					}					
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));		
+				
+				curl_close($ch);				
+				break;				
+			}			
+
+			case "WorkingModeHC1-NightOutTempHC":
+			case "WorkingModeHC2-NightOutTempHC":
+			{
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=35&hc=" . (strpos($parameter, "HC1")?1:2) . "&tp=" .   (($value<0)?('-'):'') . (str_pad(abs($value), 2, '0', STR_PAD_LEFT)));					
+				do
+				{
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength)
+					{
+						$xml=simplexml_load_string($output);
+						if ((isset($xml->NightOutTempHC)) && ($xml->NightOutTempHC == (number_format($value,0)))) break;
+					}					
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));		
+				
+				curl_close($ch);				
+				break;				
+			}		
+
+			case "WorkingModeHC1-NightSetbackHC":
+			case "WorkingModeHC2-NightSetbackHC":
+			{
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=34&hc=" . (strpos($parameter, "HC1")?1:2) . "&wm=" . ($value) );					
+				do
+				{
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength)
+					{
+						$xml=simplexml_load_string($output);
+						if ((isset($xml->NightSetbackHC)) && ($xml->NightSetbackHC == $value)) break;
+					}					
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));		
+				
+				curl_close($ch);				
+				break;				
+			}			
+ 	
+
+			case "WorkingModeHC1-SWThresTempHC":
+			case "WorkingModeHC2-SWThresTempHC":
+			{
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=33&hc=" . (strpos($parameter, "HC1")?1:2) . "&tp=" . (number_format($value,0)) );					
+				do
+				{
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength)
+					{
+						$xml=simplexml_load_string($output);						
+						if ((isset($xml->SWThresTempHC)) && ($xml->SWThresTempHC == (number_format($value,0)))) break;
+					}					
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));		
+				
+				curl_close($ch);				
+				break;				
+			}		
+	
+			case "UBAParameterDHW-SelTempDHW":
+			case "UBAParameterDHW-SelTempTDDHW":
+			{
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=" . (strpos($parameter, "TD")?44:43) . "&tp=" . ($value) );					
+				do
+				{			
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength)
+					{
+						$xml=simplexml_load_string($output);
+						if ((strpos($parameter, "TD")) && (isset($xml->SelTempTDDHW)) && ($xml->SelTempTDDHW == $value)) break;
+						if (!(strpos($parameter, "TD")) && (isset($xml->SelTempDHW)) && ($xml->SelTempDHW == $value)) break;
+					}					
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));	
+				
+				curl_close($ch);				
+				break;				
+			}
+			
+			case "WorkingModeDHW-WorkModeDHW":
+			{
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=41&wm=" . ($value) );				
+				do
+				{
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength)
+					{
+						$xml=simplexml_load_string($output);
+						if ((isset($xml->WorkModeDHW)) && ($xml->WorkModeDHW == $value)) break;
+					}					
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));		
+				
+				curl_close($ch);				
+				break;		
+			}
+
+			case "WorkingModeDHW-OneTimeDHW":
+			{
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=47&wm=" . ($value) );				
+				do
+				{	curl_exec($ch);
+					sleep(1);				
+					curl_setopt($ch,CURLOPT_URL,$url . "?op=06");
+					$output=curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength)
+					{
+						$xml=simplexml_load_string($output);
+						if(($value==0) && (isset($xml->OneTimeDHW)) && ($xml->OneTimeDHW < 33)) break;
+						if(($value==1) && (isset($xml->OneTimeDHW)) && ($xml->OneTimeDHW > 33)) break;
+					}					
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));	
+				
+				curl_close($ch);				
+				break;		
+			}			
+
+			case "WorkingModeDHW-WorkModeTDDHW":
+			{
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=48&wm=" . (str_pad(abs($value), 3, '0', STR_PAD_LEFT)));				
+				do
+				{
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength)
+					{
+						$xml=simplexml_load_string($output);
+						if ((isset($xml->WorkModeTDDHW)) && ($xml->WorkModeTDDHW == $value)) break;
+					}					
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));		
+				
+				curl_close($ch);				
+				break;		
+			}	
+			
+			case "WorkingModeDHW-DayTDDHW":
+			{
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=49&d=" . ($value));				
+				do
+				{
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength)
+					{
+						$xml=simplexml_load_string($output);
+						if ((isset($xml->DayTDDHW)) && ($xml->DayTDDHW == $value)) break;
+					}					
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));		
+				
+				curl_close($ch);				
+				break;		
+			}			
+
+			case "WorkingModeDHW-HourTDDHW":
+			{
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=50&h=" . (str_pad(abs($value), 2, '0', STR_PAD_LEFT)));				
+				do
+				{
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength)
+					{
+						$xml=simplexml_load_string($output);
+						if ((isset($xml->HourTDDHW)) && ($xml->HourTDDHW == $value)) break;
+					}					
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));		
+				
+				curl_close($ch);				
+				break;		
+			}				
+	
+			case "Program1HC1-ProgramName":
+			case "Program1HC2-ProgramName":	
+			{
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=32&hc=" . (strpos($parameter, "HC1")?1:2) . "&pr=" . (str_pad($value, 2, '0', STR_PAD_LEFT)));				
+				do
+				{
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength)
+					{
+						$xml=simplexml_load_string($output);
+						if ((isset($xml->ProgramName)) && ($xml->ProgramName == $value)) break;
+					}					
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));		
+				
+				curl_close($ch);				
+				break;		
+			}		
+
+			case "WorkingModeDHW-ProgDHW":
+			{
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=45&pr=" . (str_pad($value, 3, '0', STR_PAD_LEFT)));				
+				do
+				{
+					$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength)
+					{
+						$xml=simplexml_load_string($output);
+						if ((isset($xml->ProgDHW)) && ($xml->ProgDHW == $value)) break;
+					}					
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));		
+				
+				curl_close($ch);				
+				break;		
+			}				
+									
+			case "setSwitchPoint":
+			
+				if (isset($_POST["switchPoint"]))
+				{
+					$switchPoint = $_POST["switchPoint"];
+				}
+				else
+				{
+					$switchPoint = null;
+				}
+				
+				if (isset($_POST["action"]))
+				{
+					$action = $_POST["action"];
+				}
+				else
+				{
+					$action = null;
+				}
+				
+				if (isset($_POST["day"]))
+				{
+					$day = $_POST["day"];
+				}
+				else
+				{
+					$day = null;
+				}
+				
+				if (isset($_POST["hour"]))
+				{
+					$hour = $_POST["hour"];
+				}
+				else
+				{
+					$hour = null;
+				}
+				
+				if (isset($_POST["minute"]))
+				{
+					$minute = $_POST["minute"];
+				}
+				else
+				{
+					$minute = null;
+				}	
+						
+				$updateXML = FALSE;
+				
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=51&pr=" . ($value) . "&sp=" . (str_pad($switchPoint, 2, '0', STR_PAD_LEFT)) . "&e=" . ($action) . "&d=" . ($day) . "&h=" . (str_pad($hour, 2, '0', STR_PAD_LEFT)) . "&m=" . (str_pad($minute, 2, '0', STR_PAD_LEFT)));				
+				do
+				{	$output = curl_exec($ch);
+					if (substr_count($output, PHP_EOL) == $standardLength*2) break;
+					$currentRetry++;
+				} while ($currentRetry < $maxRetries && (sleep(1)==0));		
+				
+				curl_close($ch);				
+				break;	
+										
+			case "restart":	
+				curl_setopt($ch,CURLOPT_URL,$url . "?op=70");				
+				$output = curl_exec($ch);
+				$updateXML = FALSE;
+				break;
+				
+			default:
+				$updateXML = FALSE;
+				$currentRetry = $maxRetries;
+				break;
+	}
+		
+	// release lock supressing warning messages		
+	@releaseLock();
+	
+	// If after maxRetries retries the operation was not succesfull, return with error
+	if ($currentRetry === $maxRetries)
+	{
+		http_response_code(501);
+		exit(1);
+	}
+	else
+	{
+		// Update the general monitor path with the value set
+		if ($updateXML === TRUE)
+		{
+			$xml=simplexml_load_file($generalMonitorPath);
+			$tagPath = explode("-", $parameter);
+			
+			if (isset($xml->$tagPath[0]->$tagPath[1]))
+			{
+				$xml->$tagPath[0]->$tagPath[1] = ((strpos($parameter, 'Temp') !== false) && (strpos($parameter, 'DHW') === false)) ?number_format($value,1):$value;
+				$xml->asXML($generalMonitorPath);	
+			}
+		}
+		exit(0);
+	}
+	
+?>
+
+#end raw
+

@@ -1,0 +1,14 @@
+[Unit]
+Description="http poll calduino"
+After=multi-user.target
+ 
+[Service]
+User=www-data
+Group=www-data
+Type=simple
+ExecStart=/bin/bash /home/dani/scripts/pollCalduino/pollCalduino.sh
+Restart=on-abort
+ 
+[Install]
+WantedBy=multi-user.target
+

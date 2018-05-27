@@ -1,0 +1,13 @@
+/var/log/weewx/pollCalduino.log
+{
+	rotate 10
+	weekly
+	missingok
+	notifempty
+	compress
+	delaycompress
+	sharedscripts
+	postrotate
+		invoke-rc.d rsyslog rotate > /dev/null
+	endscript
+}
