@@ -87,27 +87,27 @@
 			switch(calduinoParameters[i].type)
 			{
 				case "float":
-					document.getElementById(calduinoParameters[i].datagram + calduinoParameters[i].name).value = parseFloat(calduinoParameters[i].value).toFixed(1);	
+					document.getElementById(calduinoParameters[i].datagram + "-" + calduinoParameters[i].name).value = parseFloat(calduinoParameters[i].value).toFixed(1);	
 					break;
 				case "number":
-					document.getElementById(calduinoParameters[i].datagram + calduinoParameters[i].name).innerHTML = parseInt(calduinoParameters[i].value);	
-					document.getElementById(calduinoParameters[i].datagram + calduinoParameters[i].name).value = parseInt(calduinoParameters[i].value);
+					document.getElementById(calduinoParameters[i].datagram + "-" + calduinoParameters[i].name).innerHTML = parseInt(calduinoParameters[i].value);	
+					document.getElementById(calduinoParameters[i].datagram + "-" + calduinoParameters[i].name).value = parseInt(calduinoParameters[i].value);
 					break;
 				case "select-one":
-					document.getElementById(calduinoParameters[i].datagram + calduinoParameters[i].name).value = calduinoParameters[i].value;
+					document.getElementById(calduinoParameters[i].datagram + "-" + calduinoParameters[i].name).value = calduinoParameters[i].value;
 					break;
 				case "image":
 					if (calduinoParameters[i].value == 0)
 					{
-						document.getElementById(calduinoParameters[i].datagram + calduinoParameters[i].name).src = "icons/"+calduinoParameters[i].name+"Off.png";
+						document.getElementById(calduinoParameters[i].datagram + "-" + calduinoParameters[i].name).src = "icons/"+calduinoParameters[i].name+"Off.png";
 					}
 					else
 					{
-						document.getElementById(calduinoParameters[i].datagram + calduinoParameters[i].name).src = "icons/"+calduinoParameters[i].name+"On.png";
+						document.getElementById(calduinoParameters[i].datagram + "-" + calduinoParameters[i].name).src = "icons/"+calduinoParameters[i].name+"On.png";
 					}	 
 					break;
 				case "text":
-					document.getElementById(calduinoParameters[i].datagram + calduinoParameters[i].name).innerHTML = String.fromCharCode(calduinoParameters[i].value);
+					document.getElementById(calduinoParameters[i].datagram + "-" + calduinoParameters[i].name).innerHTML = String.fromCharCode(calduinoParameters[i].value);
 					break;
 				default:
 					break;
@@ -115,7 +115,7 @@
 		}
 		
 		document.getElementById("sendButton").disabled = true; 
-		document.getElementById("UBAMonitorFastErrCodeText").innerHTML = translateErrorCode(calduinoParameters[34].value+""+calduinoParameters[35].value,calduinoParameters[36].value);
+		document.getElementById("UBAMonitorFast-ErrCodeText").innerHTML = translateErrorCode(calduinoParameters[34].value + "-" + calduinoParameters[35].value,calduinoParameters[36].value);
 		enableAllElements();
 		
 	}
@@ -154,11 +154,18 @@
 	function enableAllElements()
 	{
 		for (i in calduinoParameters){
-			document.getElementById(calduinoParameters[i].datagram + calduinoParameters[i].name).disabled = false;					
+			document.getElementById(calduinoParameters[i].datagram + "-" + calduinoParameters[i].name).disabled = false;					
 		}
+		
+		document.getElementById("Program1HC1-ProgramName-Button").disabled = false;
+		document.getElementById("Program1HC2-ProgramName-Button").disabled = false;
+		document.getElementById("ProgramDHW-Button").disabled = false;	
+		
 		for (i in calduinoParameters){ 
 			disableSelective(i);					
-		}					
+		}	
+		
+	
 	}
 	
 	function disableSelective(i)
@@ -173,20 +180,20 @@
 					if (calduinoParameters[i].name.endsWith("HC"))
 					{											
 						// deactivate temperature day
-						document.getElementById(calduinoParameters[i].datagram + "SelDayTempHC").disabled = true;
+						document.getElementById(calduinoParameters[i].datagram + "-" + "SelDayTempHC").disabled = true;
 						
 						// deactivate select and edit program
-						document.getElementById("Program1" + calduinoParameters[i].datagram.slice(-3) + "ProgramName").disabled = true;
-						document.getElementById("Program1" + calduinoParameters[i].datagram.slice(-3) + "ProgramName" + "Button").disabled = true;
+						document.getElementById("Program1" + calduinoParameters[i].datagram.slice(-3) + "-" + "ProgramName").disabled = true;
+						document.getElementById("Program1" + calduinoParameters[i].datagram.slice(-3) + "-" + "ProgramName" + "-" + "Button").disabled = true;
 
 						// deactivate setbackModeTemperature if setbackMode is not 3
-						if(Number(document.getElementById(calduinoParameters[i].datagram + "NightSetbackHC").value) != 3)
+						if(Number(document.getElementById(calduinoParameters[i].datagram + "-" + "NightSetbackHC").value) != 3)
 						{
-							document.getElementById(calduinoParameters[i].datagram + "NightOutTempHC").disabled = true;
+							document.getElementById(calduinoParameters[i].datagram + "-" +"NightOutTempHC").disabled = true;
 						}								
 						
 						// deactivate winter/summer threshold
-						document.getElementById(calduinoParameters[i].datagram + "SWThresTempHC").disabled = true;	
+						document.getElementById(calduinoParameters[i].datagram + "-" + "SWThresTempHC").disabled = true;	
 						
 					}
 					
@@ -194,22 +201,22 @@
 					else if (calduinoParameters[i].name.endsWith("TDDHW"))
 					{						
 						// deactivate temperature DHW
-						document.getElementById("UBAParameterDHWSelTempTDDHW").disabled = true;
+						document.getElementById("UBAParameterDHW-SelTempTDDHW").disabled = true;
 
 						// deactivate day and hour of DHW
-						document.getElementById("WorkingModeDHWDayTDDHW").disabled = true;
-						document.getElementById("WorkingModeDHWHourTDDHW").disabled = true;
+						document.getElementById("WorkingModeDHW-DayTDDHW").disabled = true;
+						document.getElementById("WorkingModeDHW-HourTDDHW").disabled = true;
 					}
 					
 					// Work Mode of DHW
 					else
 					{
 						// deactivate temperature DHW
-						document.getElementById("UBAParameterDHWSelTempDHW").disabled = true;
+						//document.getElementById("UBAParameterDHW-SelTempDHW").disabled = true;
 						
 						// deactivate select and edit program
-						document.getElementById("WorkingModeDHWProgDHW").disabled = true;
-						document.getElementById("ProgramDHWButton").disabled = true;	
+						document.getElementById("WorkingModeDHW-ProgDHW").disabled = true;
+						document.getElementById("ProgramDHW-Button").disabled = true;	
 					}
 					break;
 				}
@@ -220,32 +227,26 @@
 					if (calduinoParameters[i].name.endsWith("HC"))
 					{						
 						// deactivate temperature night
-						document.getElementById(calduinoParameters[i].datagram + "SelNightTempHC").disabled = true;
+						document.getElementById(calduinoParameters[i].datagram + "-" + "SelNightTempHC").disabled = true;
 						
 						// deactivate select and edit program
-						document.getElementById("Program1" + calduinoParameters[i].datagram.slice(-3) + "ProgramName").disabled = true;
-						document.getElementById("Program1" + calduinoParameters[i].datagram.slice(-3) + "ProgramName" + "Button").disabled = true;
+						document.getElementById("Program1" + calduinoParameters[i].datagram.slice(-3) + "-" + "ProgramName").disabled = true;
+						document.getElementById("Program1" + calduinoParameters[i].datagram.slice(-3) + "-" + "ProgramName" + "-" +"Button").disabled = true;
 						
 						// deactivate setbackMode and setbackModeTemperature
-						document.getElementById(calduinoParameters[i].datagram + "NightOutTempHC").disabled = true;
-						document.getElementById(calduinoParameters[i].datagram + "NightSetbackHC").disabled = true;
+						document.getElementById(calduinoParameters[i].datagram + "-" + "NightOutTempHC").disabled = true;
+						document.getElementById(calduinoParameters[i].datagram + "-" + "NightSetbackHC").disabled = true;
 
 						// deactivate winter/summer threshold
-						document.getElementById(calduinoParameters[i].datagram + "SWThresTempHC").disabled = true;
-					}
-					
-					// Work Mode of Thermal Disinfection
-					else if (calduinoParameters[i].name.endsWith("TDDHW"))
-					{						
-				
+						document.getElementById(calduinoParameters[i].datagram + "-" + "SWThresTempHC").disabled = true;
 					}
 					
 					// Work Mode of DHW
 					else
 					{						
 						// deactivate select and edit program
-						document.getElementById("WorkingModeDHWProgDHW").disabled = true;
-						document.getElementById("ProgramDHWButton").disabled = true;	
+						document.getElementById("WorkingModeDHW-ProgDHW").disabled = true;
+						document.getElementById("ProgramDHW-Button").disabled = true;	
 					}
 					break;									
 				}
@@ -255,20 +256,16 @@
 					// Work Mode of a Circuit
 					if (calduinoParameters[i].name.endsWith("HC"))
 					{												
-						// activate edit program button only if program is 0 or 9																	
-						if((Number(document.getElementById("Program1" + calduinoParameters[i].datagram.slice(-3) + "ProgramName").value) == 0) || Number((document.getElementById("Program1" + calduinoParameters[i].datagram.slice(-3) + "ProgramName").value) == 9))
+						// deactivate edit program button  if program is not 0 or 9																	
+						if(!((Number(document.getElementById("Program1" + calduinoParameters[i].datagram.slice(-3) + "-" + "ProgramName").value) == 0) || Number((document.getElementById("Program1" + calduinoParameters[i].datagram.slice(-3) + "-" + "ProgramName").value) == 9)))
 						{
-							document.getElementById("Program1" + calduinoParameters[i].datagram.slice(-3) + "ProgramName" + "Button").disabled = false;
-						}
-						else
-						{
-							document.getElementById("Program1" + calduinoParameters[i].datagram.slice(-3) + "ProgramName" + "Button").disabled = true;
+							document.getElementById("Program1" + calduinoParameters[i].datagram.slice(-3) + "-" + "ProgramName" + "-" + "Button").disabled = true;
 						}
 
 						// deactivate setbackModeTemperature if setbackMode is not 3
-						if(Number(document.getElementById(calduinoParameters[i].datagram + "NightSetbackHC").value) != 3)
+						if(Number(document.getElementById(calduinoParameters[i].datagram + "-" + "NightSetbackHC").value) != 3)
 						{
-							document.getElementById(calduinoParameters[i].datagram  + "NightOutTempHC").disabled = true;
+							document.getElementById(calduinoParameters[i].datagram  + "-" + "NightOutTempHC").disabled = true;
 						}						
 					}
 					
@@ -276,13 +273,9 @@
 					else
 					{
 						// activate edit program button only if program is 255	
-						if((Number(document.getElementById("WorkingModeDHWProgDHW").value) == 255))
+						if((Number(document.getElementById("WorkingModeDHW-ProgDHW").value) != 255))
 						{
-							document.getElementById("ProgramDHWButton").disabled = false;
-						}
-						else
-						{
-							document.getElementById("ProgramDHWButton").disabled = true;
+							document.getElementById("ProgramDHW-Button").disabled = true;
 						}
 					}
 					
@@ -295,14 +288,14 @@
 	
 	function disableAllElements(currentId) {
 	
-		document.getElementById("ProgramDHWButton").disabled = true;
-		document.getElementById("Program1HC1ProgramNameButton").disabled = true;
-		document.getElementById("Program1HC2ProgramNameButton").disabled = true;
+		document.getElementById("ProgramDHW-Button").disabled = true;
+		document.getElementById("Program1HC1-ProgramName-Button").disabled = true;
+		document.getElementById("Program1HC2-ProgramName-Button").disabled = true;
 		
 		for (i in calduinoParameters)
 		{
 			// search position of current element
-			if (currentId.id == (calduinoParameters[i].datagram+calduinoParameters[i].name))
+			if (currentId.id == (calduinoParameters[i].datagram + "-" + calduinoParameters[i].name))
 			{
 				// if type is float, parse to only one decimal
 				if (calduinoParameters[i].type == "float")
@@ -315,7 +308,7 @@
 				{
 					for (j in calduinoParameters)
 					{
-						document.getElementById(calduinoParameters[j].datagram + calduinoParameters[j].name).disabled = false;							
+						document.getElementById(calduinoParameters[j].datagram + "-" + calduinoParameters[j].name).disabled = false;							
 					}
 					for (j in calduinoParameters)
 					{
@@ -330,9 +323,9 @@
 					for (i in calduinoParameters)
 					{
 						
-						if (currentId.id != calduinoParameters[i].datagram.concat(calduinoParameters[i].name))
+						if (currentId.id != calduinoParameters[i].datagram.concat("-" + calduinoParameters[i].name))
 						{	
-							document.getElementById(calduinoParameters[i].datagram + calduinoParameters[i].name).disabled = true;
+							document.getElementById(calduinoParameters[i].datagram + "-" + calduinoParameters[i].name).disabled = true;
 						}						
 						document.getElementById("sendButton").disabled = false;
 					}				
@@ -379,10 +372,10 @@
 		{
 			for (i in calduinoParameters)
 			{
-				if ((calduinoParameters[i].value != document.getElementById(calduinoParameters[i].datagram + calduinoParameters[i].name).value) && ((calduinoParameters[i].type!="image")||(types[i].type!="text")))
+				if ((calduinoParameters[i].value != document.getElementById(calduinoParameters[i].datagram + "-" + calduinoParameters[i].name).value) && ((calduinoParameters[i].type!="image")||(types[i].type!="text")))
 				{
 					var updatedParam =  calduinoParameters[i].datagram + "-" +calduinoParameters[i].name;
-					var updatedValue = document.getElementById(calduinoParameters[i].datagram + calduinoParameters[i].name).value;
+					var updatedValue = document.getElementById(calduinoParameters[i].datagram + "-" + calduinoParameters[i].name).value;
 					document.getElementById("modalParam").innerHTML = "Par&#225;metro: <b>"+ updatedParam;
 					document.getElementById("modalValue").innerHTML = "Valor fijado: <b>"+ updatedValue;			
 					document.getElementById("modalTitle").innerHTML = titleString + "Comunicando con Calduino...";
@@ -398,14 +391,14 @@
 							if (this.status == 200) 
 							{
 								calduinoParameters[i].value = updatedValue;
-								changeTemporaryElementBorder(calduinoParameters[i].datagram + calduinoParameters[i].name + "Div",'#00ff00',2000);
+								changeTemporaryElementBorder(calduinoParameters[i].datagram + "-" + calduinoParameters[i].name + "-" + "Div",'#00ff00',2000);
 								document.getElementById("sendButton").disabled = true;
 								enableAllElements();
 							}
 							else
 							{
-								changeTemporaryElementBorder(calduinoParameters[i].datagram + calduinoParameters[i].name+"Div",'#ff0000',2000);
-								document.getElementById(calduinoParameters[i].datagram + calduinoParameters[i].name).value = calduinoParameters[i].value;
+								changeTemporaryElementBorder(calduinoParameters[i].datagram + "-" + calduinoParameters[i].name + "-" + "Div",'#ff0000',2000);
+								document.getElementById(calduinoParameters[i].datagram + "-" + calduinoParameters[i].name).value = calduinoParameters[i].value;
 								document.getElementById("sendButton").disabled = true;
 								enableAllElements();
 							}

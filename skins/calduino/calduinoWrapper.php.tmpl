@@ -18,7 +18,7 @@
 	$updateXML = TRUE;
 	$maxRetries = 5;
 	$currentRetry = 0;
-
+	$curlTimeout = 45;
 	/**
      * Get resource lock to ensure serial access to calduino
      */
@@ -73,7 +73,7 @@
 	
 	// create a curl object to communicate with calduino
 	$ch = curl_init();
-	curl_setopt($ch,CURLOPT_TIMEOUT,30);
+	curl_setopt($ch,CURLOPT_TIMEOUT, $curlTimeout);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 	curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);	
 	$url = "http://calduino";	
@@ -331,7 +331,7 @@
 				break;		
 			}
 
-			case "WorkingModeDHW-OneTimeDHW":
+			case "UBAMonitorDHW-OneTimeDHW":
 			{
 				curl_setopt($ch,CURLOPT_URL,$url . "?op=47&wm=" . ($value) );				
 				do

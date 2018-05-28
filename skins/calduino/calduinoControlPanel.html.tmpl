@@ -24,16 +24,16 @@
 								</div>						
 								
 								<div class="col-md-8 text-right" style="margin-bottom:10px;padding-right: 50px;" >
-									<img id="UBAMonitorFastBurnGas" data-toggle="tooltip" title="$Labels.Calduino.burnGas" src="icons/BurnGasOn.png" alt="" height="50">
-									<img id="UBAMonitorFastIgnWork" data-toggle="tooltip" title="$Labels.Calduino.ignition" src="icons/IgnWorkOn.png" alt="" height="50">
-									<img id="UBAMonitorFastFanWork" data-toggle="tooltip" title="$Labels.Calduino.fan" src="icons/FanWorkOn.png" alt="" height="50">
-									<img id="UBAMonitorFastHeatPmp" data-toggle="tooltip" title="$Labels.Calduino.heatPmp" src="icons/HeatPmpOn.png" alt="" height="50">					
-									<img id="MonitorHC1DayModHC" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.dayMod" src="icons/DayModHCOn.png" alt="" height="50">								
-									<img id="MonitorHC1SummerModHC" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.sumMod" src="icons/SummerModHCOn.png" alt="" height="50">							
-									<img id="UBAMonitorFastCircDHW" data-toggle="tooltip" title="$Labels.Calduino.circ" src="icons/CircDHWOn.png" alt="" height="50">											
-									<img id="UBAMonitorFastWay3ValveDHW" data-toggle="tooltip" title="$Labels.Calduino.dhwHeat" src="icons/Way3ValveDHWOn.png" alt="" height="50">											
-									<img id="UBAMonitorDHWDayModeDHW" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.dayModDHW" src="icons/DayModeDHWOn.png" alt="" height="50">
-									<img id="UBAMonitorDHWPrepareDHW" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.prepareDHW" src="icons/PrepareDHWOn.png" alt="" height="50">								
+									<img id="UBAMonitorFast-BurnGas" data-toggle="tooltip" title="$Labels.Calduino.burnGas" src="icons/BurnGasOn.png" alt="" height="50">
+									<img id="UBAMonitorFast-IgnWork" data-toggle="tooltip" title="$Labels.Calduino.ignition" src="icons/IgnWorkOn.png" alt="" height="50">
+									<img id="UBAMonitorFast-FanWork" data-toggle="tooltip" title="$Labels.Calduino.fan" src="icons/FanWorkOn.png" alt="" height="50">
+									<img id="UBAMonitorFast-HeatPmp" data-toggle="tooltip" title="$Labels.Calduino.heatPmp" src="icons/HeatPmpOn.png" alt="" height="50">					
+									<img id="MonitorHC1-DayModHC" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.dayMod" src="icons/DayModHCOn.png" alt="" height="50">								
+									<img id="MonitorHC1-SummerModHC" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.sumMod" src="icons/SummerModHCOn.png" alt="" height="50">							
+									<img id="UBAMonitorFast-CircDHW" data-toggle="tooltip" title="$Labels.Calduino.circ" src="icons/CircDHWOn.png" alt="" height="50">											
+									<img id="UBAMonitorFast-Way3ValveDHW" data-toggle="tooltip" title="$Labels.Calduino.dhwHeat" src="icons/Way3ValveDHWOn.png" alt="" height="50">											
+									<img id="UBAMonitorDHW-DayModeDHW" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.dayModDHW" src="icons/DayModeDHWOn.png" alt="" height="50">
+									<img id="UBAMonitorDHW-PrepareDHW" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.prepareDHW" src="icons/PrepareDHWOn.png" alt="" height="50">								
 								</div>	
 								
 								<div class="col-md-1 col-xs-12" style="height: 39px;">							
@@ -53,12 +53,12 @@
 										
 										<div class="col-md-9 col-xs-12">
 										
-											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="WorkingModeHC1WorkModeHCDiv">
+											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="WorkingModeHC1-WorkModeHC-Div">
 												<div class="col-xs-6" data-toggle="tooltip" title="$Labels.Calduino.modeInput">
 													<h5>$Labels.Calduino.mode:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<select id="WorkingModeHC1WorkModeHC" name="mode" onchange="disableAllElements(this)" data-html="true" data-container="body" data-toggle="tooltip" title="$Labels.Calduino.modeInputInfo">
+													<select id="WorkingModeHC1-WorkModeHC" name="mode" onchange="disableAllElements(this)" data-html="true" data-container="body" data-toggle="tooltip" title="$Labels.Calduino.modeInputInfo">
 														<option value="2">$Labels.Calduino.modeAuto</option>
 														<option value="1">$Labels.Calduino.modeDay</option>
 														<option value="0">$Labels.Calduino.modeNight</option>
@@ -66,30 +66,30 @@
 												</div>
 											</div>	
 											
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC1SelDayTempHCDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC1-SelDayTempHC-Div">
 												<div class="col-xs-6" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.dayInput">
 													<h5>$Labels.Calduino.day:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<input id="WorkingModeHC1SelDayTempHC" type="number" name="quantity" min="6" max="29" step="0.5" pattern="[0-9]{1,2}.[0-5]$" onchange="disableAllElements(this)">
+													<input id="WorkingModeHC1-SelDayTempHC" type="number" name="quantity" min="6" max="29" step="0.5" pattern="[0-9]{1,2}.[0-5]$" onchange="disableAllElements(this)">
 												</div>
 											</div>
 											
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC1SelNightTempHCDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC1-SelNightTempHC-Div">
 												<div class="col-xs-6" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.nightInput">
 													<h5>$Labels.Calduino.night:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<input id="WorkingModeHC1SelNightTempHC" type="number" name="quantity" min="6" max="29" step="0.5" pattern="[0-9]{1,2}.[0-5]$" onchange="disableAllElements(this)">
+													<input id="WorkingModeHC1-SelNightTempHC" type="number" name="quantity" min="6" max="29" step="0.5" pattern="[0-9]{1,2}.[0-5]$" onchange="disableAllElements(this)">
 												</div>
 											</div>
 											
-											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="Program1HC1ProgramNameDiv">
+											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="Program1HC1-ProgramName-Div">
 												<div class="col-xs-6" data-toggle="tooltip" title="$Labels.Calduino.programInfo">
 													<h5>$Labels.Calduino.program:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<select id="Program1HC1ProgramName" name="program" onchange="disableAllElements(this)">														
+													<select id="Program1HC1-ProgramName" name="program" onchange="disableAllElements(this)">														
 														<option value="0">$Labels.Calduino.user1</option>														
 														<option value="9">$Labels.Calduino.user2</option>														
 														<option value="1">$Labels.Calduino.family</option>
@@ -107,7 +107,7 @@
 										</div>
 										
 										<div class="col-md-1 col-xs-4 text-center" style="height: 39px;" >							
-											<button type="button" id="Program1HC1ProgramNameButton" class="btn btn-danger" onclick="editProgram(12)" style="vertical-align: text-top;" data-toggle="tooltip" title="$Labels.Calduino.programEdit">
+											<button type="button" id="Program1HC1-ProgramName-Button" class="btn btn-danger" onclick="editProgram(12)" style="vertical-align: text-top;" data-toggle="tooltip" title="$Labels.Calduino.programEdit">
 												<span class="glyphicon glyphicon-edit">
 												</span>
 											</button>	
@@ -121,21 +121,21 @@
 										</div>
 										
 										<div class="col-md-9 col-xs-12">
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC1RoomTempOffHCDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC1-RoomTempOffHC-Div">
 												<div class="col-xs-6" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.offsetInfo">
 													<h5>$Labels.Calduino.offset:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<input id="WorkingModeHC1RoomTempOffHC" type="number" name="quantity" min="-5" max="5" step="0.5" pattern="[0-9]{1,2}.[0-5]$" onchange="disableAllElements(this)">
+													<input id="WorkingModeHC1-RoomTempOffHC" type="number" name="quantity" min="-5" max="5" step="0.5" pattern="[0-9]{1,2}.[0-5]$" onchange="disableAllElements(this)">
 												</div>
 											</div>
 											
-											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="WorkingModeHC1NightSetbackHCDiv">
+											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="WorkingModeHC1-NightSetbackHC-Div">
 												<div class="col-xs-6" data-toggle="tooltip" title="$Labels.Calduino.setbackInfo">
 													<h5>$Labels.Calduino.setback:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<select id="WorkingModeHC1NightSetbackHC" name="mode" onchange="disableAllElements(this)"  data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.setbackInfo2">
+													<select id="WorkingModeHC1-NightSetbackHC" name="mode" onchange="disableAllElements(this)"  data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.setbackInfo2">
 														<option value="3">$Labels.Calduino.setbackExt</option>
 														<option value="1">$Labels.Calduino.setbackOn</option>
 														<option value="0">$Labels.Calduino.setbackOff</option>
@@ -143,21 +143,21 @@
 												</div>
 											</div>
 											
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC1NightOutTempHCDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC1-NightOutTempHC-Div">
 												<div class="col-xs-6" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.nightThresholdOutTempInfo">
 													<h5>$Labels.Calduino.nightThresholdOutTemp:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<input id="WorkingModeHC1NightOutTempHC" type="number" name="quantity" min="-20" max="10" step="1" pattern="[0-9]{1,2}$" onchange="disableAllElements(this)">
+													<input id="WorkingModeHC1-NightOutTempHC" type="number" name="quantity" min="-20" max="10" step="1" pattern="[0-9]{1,2}$" onchange="disableAllElements(this)">
 												</div>
 											</div>
 											
-											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="WorkingModeHC1SWThresTempHCDiv">
+											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="WorkingModeHC1-SWThresTempHC-Div">
 												<div class="col-xs-6" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.sWThresholdTempInfo">
 													<h5>$Labels.Calduino.sWThresholdTemp:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<input id="WorkingModeHC1SWThresTempHC" type="number" name="quantity" min="10" max="30" step="1" pattern="[0-9]{1,2}$" onchange="disableAllElements(this)">
+													<input id="WorkingModeHC1-SWThresTempHC" type="number" name="quantity" min="10" max="30" step="1" pattern="[0-9]{1,2}$" onchange="disableAllElements(this)">
 												</div>
 											</div>
 											
@@ -182,40 +182,40 @@
 										</div>
 										
 										<div class="col-md-9 col-xs-12">	
-											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="WorkingModeHC2WorkModeHCDiv">
+											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="WorkingModeHC2-WorkModeHC-Div">
 												<div class="col-xs-6" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.modeInput">
 													<h5>$Labels.Calduino.mode:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<select id="WorkingModeHC2WorkModeHC" name="mode" onchange="disableAllElements(this)" data-html="true" data-container="body" data-toggle="tooltip" title="$Labels.Calduino.modeInputInfo">
+													<select id="WorkingModeHC2-WorkModeHC" name="mode" onchange="disableAllElements(this)" data-html="true" data-container="body" data-toggle="tooltip" title="$Labels.Calduino.modeInputInfo">
 														<option value="2">$Labels.Calduino.modeAuto</option>
 														<option value="1">$Labels.Calduino.modeDay</option>
 														<option value="0">$Labels.Calduino.modeNight</option>
 													</select>
 												</div>
 											</div>
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC2SelDayTempHCDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC2-SelDayTempHC-Div">
 												<div class="col-xs-6" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.dayInput">
 													<h5>$Labels.Calduino.day:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<input id="WorkingModeHC2SelDayTempHC" type="number" name="quantity" min="6" max="29" step="0.5" pattern="[0-9]{1,2}.[0-5]$" onchange="disableAllElements(this)">
+													<input id="WorkingModeHC2-SelDayTempHC" type="number" name="quantity" min="6" max="29" step="0.5" pattern="[0-9]{1,2}.[0-5]$" onchange="disableAllElements(this)">
 												</div>
 											</div>
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC2SelNightTempHCDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC2-SelNightTempHC-Div">
 												<div class="col-xs-6" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.nightInput">
 													<h5>$Labels.Calduino.night:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<input id="WorkingModeHC2SelNightTempHC" type="number" name="quantity" min="6" max="29" step="0.5" pattern="[0-9]{1,2}.[0-5]$" onchange="disableAllElements(this)">
+													<input id="WorkingModeHC2-SelNightTempHC" type="number" name="quantity" min="6" max="29" step="0.5" pattern="[0-9]{1,2}.[0-5]$" onchange="disableAllElements(this)">
 												</div>
 											</div>
-											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="Program1HC2ProgramNameDiv">
+											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="Program1HC2-ProgramName-Div">
 												<div class="col-xs-6" data-toggle="tooltip" title="$Labels.Calduino.programInfo">
 													<h5>$Labels.Calduino.program:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<select id="Program1HC2ProgramName" name="program" onchange="disableAllElements(this)">														
+													<select id="Program1HC2-ProgramName" name="program" onchange="disableAllElements(this)">														
 														<option value="0">$Labels.Calduino.user1</option>														
 														<option value="9">$Labels.Calduino.user2</option>														
 														<option value="1">$Labels.Calduino.family</option>
@@ -232,7 +232,7 @@
 										</div>
 										
 										<div class="col-md-1 col-xs-4 text-center" style="height: 39px;" >							
-											<button type="button" id="Program1HC2ProgramNameButton" class="btn btn-danger" onclick="editProgram(16)" style="vertical-align: text-top;" data-toggle="tooltip" title="$Labels.Calduino.programEdit">
+											<button type="button" id="Program1HC2-ProgramName-Button" class="btn btn-danger" onclick="editProgram(16)" style="vertical-align: text-top;" data-toggle="tooltip" title="$Labels.Calduino.programEdit">
 												<span class="glyphicon glyphicon-edit">
 												</span>
 											</button>	
@@ -247,21 +247,21 @@
 										
 										<div class="col-md-9 col-xs-12">
 										
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC2RoomTempOffHCDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC2-RoomTempOffHC-Div">
 												<div class="col-xs-6" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.offsetInfo">
 													<h5>$Labels.Calduino.offset:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<input id="WorkingModeHC2RoomTempOffHC" type="number" name="quantity" min="-5" max="5" step="0.5" pattern="[0-9]{1,2}.[0-5]$" onchange="disableAllElements(this)">
+													<input id="WorkingModeHC2-RoomTempOffHC" type="number" name="quantity" min="-5" max="5" step="0.5" pattern="[0-9]{1,2}.[0-5]$" onchange="disableAllElements(this)">
 												</div>
 											</div>
 											
-											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="WorkingModeHC2NightSetbackHCDiv">
+											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="WorkingModeHC2-NightSetbackHC-Div">
 												<div class="col-xs-6" data-toggle="tooltip" title="$Labels.Calduino.setbackInfo">
 													<h5>$Labels.Calduino.setback:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<select id="WorkingModeHC2NightSetbackHC" name="mode" onchange="disableAllElements(this)" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.setbackInfo2">
+													<select id="WorkingModeHC2-NightSetbackHC" name="mode" onchange="disableAllElements(this)" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.setbackInfo2">
 														<option value="3">$Labels.Calduino.setbackExt</option>
 														<option value="1">$Labels.Calduino.setbackOn</option>
 														<option value="0">$Labels.Calduino.setbackOff</option>
@@ -269,21 +269,21 @@
 												</div>
 											</div>
 											
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC2NightOutTempHCDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeHC2-NightOutTempHC-Div">
 												<div class="col-xs-6" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.nightThresholdOutTempInfo">
 													<h5>$Labels.Calduino.nightThresholdOutTemp:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<input id="WorkingModeHC2NightOutTempHC" type="number" name="quantity" min="-20" max="10" step="1" pattern="[0-9]{1,2}$" onchange="disableAllElements(this)">
+													<input id="WorkingModeHC2-NightOutTempHC" type="number" name="quantity" min="-20" max="10" step="1" pattern="[0-9]{1,2}$" onchange="disableAllElements(this)">
 												</div>
 											</div>
 											
-											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="WorkingModeHC2SWThresTempHCDiv">
+											<div class="col-xs-12 col-md-3 text-left calduinoInputs" id="WorkingModeHC2-SWThresTempHC-Div">
 												<div class="col-xs-6"  data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.sWThresholdTempInfo">
 													<h5>$Labels.Calduino.sWThresholdTemp:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<input id="WorkingModeHC2SWThresTempHC" type="number" name="quantity" min="10" max="30" step="1" pattern="[0-9]{1,2}$" onchange="disableAllElements(this)">
+													<input id="WorkingModeHC2-SWThresTempHC" type="number" name="quantity" min="10" max="30" step="1" pattern="[0-9]{1,2}$" onchange="disableAllElements(this)">
 												</div>
 											</div>
 											
@@ -309,33 +309,33 @@
 										
 										<div class="col-md-9 col-xs-12"  >
 										
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="UBAParameterDHWSelTempDHWDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="UBAParameterDHW-SelTempDHW-Div">
 												<div class="col-xs-6" data-toggle="tooltip" title="$Labels.Calduino.dHWTempInfo">
 													<h5>$Labels.Calduino.dHWTemp:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<input id="UBAParameterDHWSelTempDHW" type="number" name="quantity" min="40" max="70" step="1" pattern="[0-9]{1,2}$" onchange="disableAllElements(this)">
+													<input id="UBAParameterDHW-SelTempDHW" type="number" name="quantity" min="40" max="70" step="1" pattern="[0-9]{1,2}$" onchange="disableAllElements(this)">
 												</div>
 											</div>
 											
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="UBAMonitorDHWOneTimeDHWDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="UBAMonitorDHW-OneTimeDHW-Div">
 												<div class="col-xs-6" data-toggle="tooltip" title="$Labels.Calduino.dHWExtraInfo">
 													<h5>$Labels.Calduino.dHWExtra:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<select id="UBAMonitorDHWOneTimeDHW" name="mode" onchange="disableAllElements(this)">
+													<select id="UBAMonitorDHW-OneTimeDHW" name="mode" onchange="disableAllElements(this)">
 														<option value="1">$Labels.Calduino.dHWExtraOn</option>
 														<option value="0">$Labels.Calduino.dHWExtraOff</option>
 													</select>
 												</div>
 											</div>
 											
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeDHWWorkModeDHWDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeDHW-WorkModeDHW-Div">
 												<div class="col-xs-6" data-toggle="tooltip" title="$Labels.Calduino.dHWModeInput">
 													<h5>$Labels.Calduino.dHWMode:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<select id="WorkingModeDHWWorkModeDHW" name="mode" onchange="disableAllElements(this)" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.dHWModeInfo">
+													<select id="WorkingModeDHW-WorkModeDHW" name="mode" onchange="disableAllElements(this)" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.dHWModeInfo">
 														<option value="2">$Labels.Calduino.dHWModeAuto</option>
 														<option value="1">$Labels.Calduino.dHWModeOn</option>
 														<option value="0">$Labels.Calduino.dHWModeOff</option>
@@ -343,12 +343,12 @@
 												</div>
 											</div>
 											
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeDHWProgDHWDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeDHW-ProgDHW-Div">
 												<div class="col-xs-6" data-toggle="tooltip" title="$Labels.Calduino.dHWProgramInfo">
 													<h5>$Labels.Calduino.dHWprogram:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<select id="WorkingModeDHWProgDHW" name="program" onchange="disableAllElements(this)">														
+													<select id="WorkingModeDHW-ProgDHW" name="program" onchange="disableAllElements(this)">														
 														<option value="000">$Labels.Calduino.dHWProgramCal</option>														
 														<option value="255">$Labels.Calduino.dHWProgramOwn</option>
 													</select>
@@ -358,7 +358,7 @@
 										</div>	
 										
 										<div class="col-md-1 col-xs-4 text-center" style="height: 39px;">							
-											<button type="button" id="ProgramDHWButton" class="btn btn-danger" onclick="editProgram(8)" style="vertical-align: text-top;" data-toggle="tooltip" title="$Labels.Calduino.dHWProgramEdit">
+											<button type="button" id="ProgramDHW-Button" class="btn btn-danger" onclick="editProgram(8)" style="vertical-align: text-top;" data-toggle="tooltip" title="$Labels.Calduino.dHWProgramEdit">
 												<span class="glyphicon glyphicon-edit">
 												</span>
 											</button>	
@@ -374,33 +374,33 @@
 										
 										<div class="col-md-9 col-xs-12"  >
 										
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeDHWWorkModeTDDHWDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeDHW-WorkModeTDDHW-Div">
 												<div class="col-xs-6" data-toggle="tooltip" title="$Labels.Calduino.TDDHWInfo">
 													<h5>$Labels.Calduino.TDDHW:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<select id="WorkingModeDHWWorkModeTDDHW" name="mode" onchange="disableAllElements(this)">
+													<select id="WorkingModeDHW-WorkModeTDDHW" name="mode" onchange="disableAllElements(this)">
 														<option value="255">$Labels.Calduino.dHWExtraOn</option>
 														<option value="0">$Labels.Calduino.dHWExtraOff</option>
 													</select>
 												</div>
 											</div>
 											
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="UBAParameterDHWSelTempTDDHWDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="UBAParameterDHW-SelTempTDDHW-Div">
 												<div class="col-xs-6" data-toggle="tooltip" title="$Labels.Calduino.tempTDDHWInfo">
 													<h5>$Labels.Calduino.tempTDDHW:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<input id="UBAParameterDHWSelTempTDDHW" type="number" name="quantity" min="30" max="90" step="1" pattern="[0-9]{1,2}$" onchange="disableAllElements(this)">
+													<input id="UBAParameterDHW-SelTempTDDHW" type="number" name="quantity" min="30" max="90" step="1" pattern="[0-9]{1,2}$" onchange="disableAllElements(this)">
 												</div>
 											</div>
 
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeDHWDayTDDHWDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeDHW-DayTDDHW-Div">
 												<div class="col-xs-6" data-toggle="tooltip" data-html="true" data-container="body" title="$Labels.Calduino.dayTDDHWInfo">
 													<h5>$Labels.Calduino.dayTDDHW:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<select id="WorkingModeDHWDayTDDHW" name="program" onchange="disableAllElements(this)">														
+													<select id="WorkingModeDHW-DayTDDHW" name="program" onchange="disableAllElements(this)">														
 														<option value="0">$Labels.Calduino.monday</option>														
 														<option value="1">$Labels.Calduino.tuesday</option>
 														<option value="2">$Labels.Calduino.wednesday</option>
@@ -413,12 +413,12 @@
 												</div>
 											</div>	
 
-											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeDHWHourTDDHWDiv">
+											<div class="col-xs-12 col-md-3 calduinoInputs" id="WorkingModeDHW-HourTDDHW-Div">
 												<div class="col-xs-6" data-toggle="tooltip" title="$Labels.Calduino.hourTDDHWInfo">
 													<h5>$Labels.Calduino.hourTDDHW:</h5>							
 												</div>
 												<div class="col-xs-6" >
-													<input id="WorkingModeDHWHourTDDHW" type="number" name="quantity" min="0" max="23" step="1" pattern="[0-9]{1,2}$" onchange="disableAllElements(this)">
+													<input id="WorkingModeDHW-HourTDDHW" type="number" name="quantity" min="0" max="23" step="1" pattern="[0-9]{1,2}$" onchange="disableAllElements(this)">
 												</div>
 											</div>										
 
@@ -447,19 +447,19 @@
 												<div class="row">
 												
 													<div class="col-xs-1"  style="padding: 0px;max-width:30px;text-align: right;">
-														<h5 id="UBAMonitorFastSrvCode1">-</h5>
+														<h5 id="UBAMonitorFast-SrvCode1">-</h5>
 													</div>
 													
 													<div class="col-xs-1"  style="padding: 0px;max-width:30px;">
-														<h5 id="UBAMonitorFastSrvCode2">-</h5>
+														<h5 id="UBAMonitorFast-SrvCode2">-</h5>
 													</div>
 													
 													<div class="col-xs-2"  style="padding-right: 0px;padding-left: 5px; max-width:40px;">
-														<h5 id="UBAMonitorFastErrCode">-</h5>
+														<h5 id="UBAMonitorFast-ErrCode">-</h5>
 													</div>	
 													
 													<div class="col-xs-8" style="padding-right: 0px; padding-left: 5px;">
-														<h5 id="UBAMonitorFastErrCodeText">-</h5>
+														<h5 id="UBAMonitorFast-ErrCodeText">-</h5>
 													</div>	
 													
 												</div>	
@@ -471,8 +471,7 @@
 										
 									</div>
 								</div>
-							</div>
-							
+							</div>							
 						</form>
 					</div>
 				</div>
