@@ -124,26 +124,103 @@
 	{
 		returnString = " ";
 		
-		switch(SrvCode + ErrCode){
-			case "0-H203":
-				returnString = "Sistema en espera. No es necesario calentar agua."
+		switch(SrvCode + "-" + ErrCode){
+			case "0-H-203":
+				returnString = "Sistema en espera. No es necesario calentar.";
 				break;
-			case "-H200":
-				returnString = "Sistema en modo calefacción. Quemador encendido."
+				
+			case "-H-200":
+				returnString = "Sistema en modo calefacción. Quemador encendido.";
 			break;
-			case "=H2507":
-			case "=H200":
-				returnString = "Calentando ACS."
-			break;			
-			case "0-Y204":
-				returnString = "La temperatura de impulsión deseada es superior a la temperatura de impulsión real."
-			break;			
-			case "0-L284":
-				returnString = "Apertura de válvula de gas."
-			break;	
-			case "0-C283":
-				returnString = "Encendiendo quemador."
-			break;
+			
+			case "=-H-2507":
+			case "=-H-200":
+			case "=-H-201":
+				returnString = "Calentando ACS.";
+				break;	
+			
+			case "0-Y-204":
+				returnString = "La temperatura de impulsión deseada es superior a la temperatura de impulsión real.";
+				break;	
+			
+			case "0-L-284":
+				returnString = "Apertura de válvula de gas.";
+				break;	
+			
+			case "0-C-283":
+				returnString = "Preparando caldera. Encendiendo quemador.";
+				break;
+			
+			case "--A-208":
+				returnString = "Caldera en modo prueba de gases de escape o en mantenimiento.";
+				break;
+			
+			case "0-U-270":
+				returnString = "Reinicia o resetea la caldera para ponerla en marcha.";
+				break;
+			
+			case "0-A-305":
+				returnString = "La caldera no puede iniciar después de calentar ACS.";
+				break;
+				
+			case "0-Y-276":
+			case "0-Y-277":
+			case "0-Y-285":
+				returnString = "Error detectado. Sistema bloqueado. La temperatura de impulso ha superado los 95°C.";
+				break;
+				
+			case "1-C-210":
+				returnString = "Error detectado. Sistema bloqueado. La temperatura del quemador es demasiado alta.";
+				break;
+			
+			case "2-E-207":
+				returnString = "Error detectado. Sistema bloqueado. Presión del sistema demasiado baja (inferior a 0,2 bar).";
+				break;
+			
+			case "2-F-260":
+				returnString = "Error detectado. Sistema bloqueado. No se detectó aumento de temperatura después de iniciar el quemador.";
+				break;
+				
+			case "2-F-271":
+			case "2-L-266":
+			case "2-L-329":
+			case "2-P-212":	
+			case "2-U-213":				
+				returnString = returnString = "Error detectado. Sistema bloqueado.";
+				break;
+			
+			case "3-A-264":
+				returnString = "Error detectado. Sistema bloqueado. Ventilador o quemador falló.";
+				break;
+
+			case "3-A-264":
+				returnString = "Error detectado. Sistema bloqueado. Ventilador o quemador falló.";
+				break;
+
+			case "3-F-273":
+				returnString = "Error detectado. Reiniciando sistema tras 24 horas funcionando.";
+				break;
+				
+			case "3-L-214":
+				returnString = "Error detectado. Sistema bloqueado. Quemador falló.";
+				break;
+				
+			case "3-P-216":
+				returnString = "Error detectado. Quemador baja potencia.";
+				break;
+				
+			case "3-P-215":
+				returnString = "Error detectado. Quemador alta potencia.";
+				break;
+				
+			case "4-A-218":
+				returnString = "Error detectado. Sistema bloqueado. La temperatura de impulso ha superado los 105°C.";
+				break;
+				
+			case "4-C-224":
+				returnString = "Error detectado. Sistema bloqueado. Temperatura detectada demasiado alta.";
+				break;
+				
 			default:
 				returnString = "Sistema en espera."
 				break;					
